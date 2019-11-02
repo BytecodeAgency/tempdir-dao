@@ -1,4 +1,4 @@
-# Temporary Directory Data-Access Object_
+# Temporary Directory Data-Access Object [![Build Status](https://travis-ci.com/BytecodeAgency/tempdir-dao.svg?branch=master)](https://travis-ci.com/BytecodeAgency/tempdir-dao)
 
 _Warning: this library has been developed for R&D purposes for an internal project at Bytecode. This package is not tested for production usage and it is not (yet) feature complete. For example, using sub-directories is not supported (yet)_
 
