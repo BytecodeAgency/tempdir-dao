@@ -1,6 +1,14 @@
-# TempDir DAO
+# Temporary Directory Data-Access Object_
 
-_Temporary Directory Data-Access Object_
+_Warning: this library has been developed for R&D purposes for an internal project at Bytecode. This package is not tested for production usage and it is not (yet) feature complete. For example, using sub-directories is not supported (yet)_
+
+## Why don't you use `ioutil.TempFile` and/or `os.TempDir`
+
+This package was created specifically to work with multiple files in a grouped together. This rules out using `iouril.TempFile` as it only works with single files.
+
+Using `os.TempDir` was ruled out as it [says in the documentation](https://golang.org/pkg/os/#TempDir) that `The directory is neither guaranteed to exist nor have accessible permissions`, while this directory does not delete the files/directory until that method has been called explicitly.
+
+
 
 ## Installation
 
@@ -37,8 +45,8 @@ _Note: you never need to include the temporary directory name in the arguments f
 package main
 
 import (
-	"github.com/BytecodeAgency/tempdir-dao"
-	"log"
+    "github.com/BytecodeAgency/tempdir-dao"
+    "log"
 )
 
 const filename = "somefile.ext"
