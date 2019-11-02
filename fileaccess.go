@@ -12,7 +12,7 @@ type TempFileAccess struct {
 	tempDirLocation string
 }
 
-func generateRandomDirName () string {
+func generateRandomDirName() string {
 	randomDirNameLength := 16
 	letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	dirName := make([]rune, randomDirNameLength)
@@ -22,7 +22,7 @@ func generateRandomDirName () string {
 	return string(dirName)
 }
 
-func newTempFileAccess () (*TempFileAccess, error) {
+func newTempFileAccess() (*TempFileAccess, error) {
 	dirName := generateRandomDirName()
 	tempDirLocation := tempDirBase + dirName + "/"
 	errCreatingDir := os.MkdirAll(tempDirLocation, 0755)
@@ -31,21 +31,20 @@ func newTempFileAccess () (*TempFileAccess, error) {
 	}, errCreatingDir
 }
 
-func (tfa *TempFileAccess) LoadDirContents (filename string) ([]os.FileInfo, error) {
+func (tfa *TempFileAccess) LoadDirContents(filename string) ([]os.FileInfo, error) {
 	return ioutil.ReadDir(tfa.tempDirLocation)
 }
 
-func (tfa *TempFileAccess) LoadFileContents (filename string) ([]byte, error) {
+func (tfa *TempFileAccess) LoadFileContents(filename string) ([]byte, error) {
 	fileLocation := tfa.tempDirLocation + filename
 	return ioutil.ReadFile(fileLocation)
 }
 
-func (tfa *TempFileAccess) SaveFile (filename string, fileContents []byte, permissions os.FileMode) error {
+func (tfa *TempFileAccess) SaveFile(filename string, fileContents []byte, permissions os.FileMode) error {
 	fileLocation := tfa.tempDirLocation + filename
 	return ioutil.WriteFile(fileLocation, fileContents, permissions)
 }
 
-func (tfa *TempFileAccess) RemoveTempFileAccess () error {
+func (tfa *TempFileAccess) RemoveTempFileAccess() error {
 	return os.Remove(tfa.tempDirLocation)
 }
-
