@@ -1,4 +1,4 @@
-package main
+package TempDirDAO
 
 import (
 	"io/ioutil"
@@ -6,15 +6,15 @@ import (
 	"os"
 )
 
-const tempDirBase = "./temp/"
+const tempDirBase = "./tmp/"
+const randomDirNameLength = 16
+var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 type TempFileAccess struct {
 	tempDirLocation string
 }
 
 func generateRandomDirName() string {
-	randomDirNameLength := 16
-	letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	dirName := make([]rune, randomDirNameLength)
 	for i := range dirName {
 		dirName[i] = letters[rand.Intn(len(letters))]
@@ -22,7 +22,7 @@ func generateRandomDirName() string {
 	return string(dirName)
 }
 
-func newTempFileAccess() (*TempFileAccess, error) {
+func NewTempFileAccess() (*TempFileAccess, error) {
 	dirName := generateRandomDirName()
 	tempDirLocation := tempDirBase + dirName + "/"
 	errCreatingDir := os.MkdirAll(tempDirLocation, 0755)
