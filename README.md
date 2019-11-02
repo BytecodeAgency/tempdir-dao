@@ -71,3 +71,7 @@ func main () {
     funcThatUsesTheTempFile(fullFilePath)
 }
 ```
+
+## License
+
+GNU Lesser General Public License (LGPL-3.0)
