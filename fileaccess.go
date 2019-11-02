@@ -1,4 +1,4 @@
-package TempDirDAO
+package tempdirdao
 
 import (
 	"io/ioutil"
