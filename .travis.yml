@@ -5,8 +5,5 @@ go:
   - 1.13.x
   - master
 
-before_script:
-  - go get -v ./..
-
 script:
   - go test -v ./...
