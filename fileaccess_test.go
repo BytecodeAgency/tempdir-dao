@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-func TestNewTempFileAccess (t *testing.T) {
+func TestNewTempFileAccess(t *testing.T) {
 	_, err := NewTempFileAccess()
 	if err != nil {
 		t.Error("Fail on DAO creation: " + err.Error())
 	}
 }
 
-func TestTempFileAccess_SaveAndLoadFile (t *testing.T) {
+func TestTempFileAccess_SaveAndLoadFile(t *testing.T) {
 	testFilename := "testfilename.ext"
 	testFileContents := "Some test contents"
 	dao, _ := NewTempFileAccess()
@@ -29,7 +29,7 @@ func TestTempFileAccess_SaveAndLoadFile (t *testing.T) {
 	}
 }
 
-func TestTempFileAccess_FullFileName (t *testing.T) {
+func TestTempFileAccess_FullFileName(t *testing.T) {
 	testFilename := "testfilename2.ext"
 	testFileContents := "Some test contents"
 	dao, _ := NewTempFileAccess()

@@ -68,7 +68,7 @@ func (tfa *TempFileAccess) RemoveTempFileAccess() error {
 	if err != nil {
 		return err
 	}
-	for i := range(allFilesInTempDir) {
+	for i := range allFilesInTempDir {
 		fullFilePath, err := tfa.GetFullFilePath(allFilesInTempDir[i].Name())
 		if err != nil {
 			return err
