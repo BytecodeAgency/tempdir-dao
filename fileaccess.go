@@ -1,13 +1,16 @@
 package tempdirdao
 
 import (
+	"errors"
 	"io/ioutil"
 	"math/rand"
 	"os"
+	"strings"
 )
 
 const tempDirBase = "./tmp/"
 const randomDirNameLength = 16
+
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 type TempFileAccess struct {
@@ -31,7 +34,21 @@ func NewTempFileAccess() (*TempFileAccess, error) {
 	}, errCreatingDir
 }
 
-func (tfa *TempFileAccess) LoadDirContents(filename string) ([]os.FileInfo, error) {
+func (tfa *TempFileAccess) GetFullFilePath(filename string) (string, error) {
+	dirContents, err := tfa.LoadDirContents()
+	if err != nil {
+		return "", err
+	}
+	for i := range dirContents {
+		fullFilenameInDir := dirContents[i].Name()
+		if strings.HasSuffix(fullFilenameInDir, filename) {
+			return fullFilenameInDir, nil
+		}
+	}
+	return "", errors.New("file does not exist")
+}
+
+func (tfa *TempFileAccess) LoadDirContents() ([]os.FileInfo, error) {
 	return ioutil.ReadDir(tfa.tempDirLocation)
 }
 
