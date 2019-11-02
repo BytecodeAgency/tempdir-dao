@@ -5,10 +5,10 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"os"
-	"strings"
+	"path/filepath"
 )
 
-const tempDirBase = "./tmp/"
+const tempDirBase = "tmp/"
 const randomDirNameLength = 16
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -39,10 +39,11 @@ func (tfa *TempFileAccess) GetFullFilePath(filename string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	pwd, _ := os.Getwd()
+	path := pwd + "/" + tfa.tempDirLocation
 	for i := range dirContents {
-		fullFilenameInDir := dirContents[i].Name()
-		if strings.HasSuffix(fullFilenameInDir, filename) {
-			return fullFilenameInDir, nil
+		if dirContents[i].Name() == filename {
+			return filepath.Join(path, filename), nil
 		}
 	}
 	return "", errors.New("file does not exist")
@@ -63,5 +64,19 @@ func (tfa *TempFileAccess) SaveFile(filename string, fileContents []byte, permis
 }
 
 func (tfa *TempFileAccess) RemoveTempFileAccess() error {
+	allFilesInTempDir, err := tfa.LoadDirContents()
+	if err != nil {
+		return err
+	}
+	for i := range(allFilesInTempDir) {
+		fullFilePath, err := tfa.GetFullFilePath(allFilesInTempDir[i].Name())
+		if err != nil {
+			return err
+		}
+		err = os.Remove(fullFilePath)
+		if err != nil {
+			return err
+		}
+	}
 	return os.Remove(tfa.tempDirLocation)
 }
